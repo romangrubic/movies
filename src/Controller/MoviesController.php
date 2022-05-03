@@ -13,8 +13,10 @@ class MoviesController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('index.html.twig', [
-            'title' => 'Avengers'
-        ]);
+        $movies = ["Avengers", "Inception", "Loki", "Sonic 2"];
+
+        return $this->render('index.html.twig', array(
+            "movies" => $movies
+        ));
     }
 }
