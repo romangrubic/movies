@@ -11,35 +11,34 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MoviesController extends AbstractController
 {
-    private $em;
+    private $movieRepository;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(MovieRepository $movieRepository)
     {
-        $this->em = $em;
+        $this->movieRepository = $movieRepository;
     }
 
     /**
-     * @Route("/movies", name="movies")
+     * @Route("/movies", methods={"GET"}, name="movies")
      */
     public function index(): Response
     {
-        // findAll() -> Select * from movies;
-        // find(5) - Select * from movies where id = 5;
+        $movies = $this->movieRepository->findAll();
 
+        return $this->render('movies/index.html.twig',[
+            'movies' => $movies
+        ]);
+    }
 
-        // findBy() = select * from movies ORDER by id DESC
+    /**
+     * @Route("/movies/{id}", methods={"GET"}, name="movie details")
+     */
+    public function show($id): Response
+    {
+        $movie = $this->movieRepository->find($id);
 
-        // $movies = $repository->findOneBy(['id' => 5, 'title' => 'The Dark Knight'],['id' => 'DESC']);
-        // findOneBy = select * from movies where id = 5 and title = 'The Dark Knight' ORDER by DESC
-
-        // $movies = $repository->count(['id' => 5]);
-        // count() = select count() from movies where id = 5
-
-        // $repository = $this->em->getRepository(Movie::class);
-        // $movies = $repository->findByReleaseYear(2019);
-
-        // dd($movies);
-
-        return $this->render('index.html.twig');
+        return $this->render('movies/show.html.twig',[
+            'movie' => $movie
+        ]);
     }
 }
