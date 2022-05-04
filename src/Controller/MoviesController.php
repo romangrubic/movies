@@ -35,10 +35,10 @@ class MoviesController extends AbstractController
         // $movies = $repository->count(['id' => 5]);
         // count() = select count() from movies where id = 5
 
-        $repository = $this->em->getRepository(Movie::class);
-        $movies = $repository->findByReleaseYear(2019);
+        // $repository = $this->em->getRepository(Movie::class);
+        // $movies = $repository->findByReleaseYear(2019);
 
-        dd($movies);
+        // dd($movies);
 
         return $this->render('index.html.twig');
     }
